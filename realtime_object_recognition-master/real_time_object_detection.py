@@ -50,12 +50,20 @@ if args["source"] == "webcam":
 time.sleep(2.0)
 
 detected_objects = []
+a = []
 # loop over the frames from the video stream
 while True:
 	# grab the frame from the threaded video stream and resize it
 	# to have a maximum width of 400 pixels
 	if args["source"] == "webcam":
 		ret, frame = vs.read()
+		
+		s = False
+		print(ret)
+		a.append(str(ret))
+		if len(a) == 50:
+			a = []
+			s = True
 		#print(ret)
 	else:
 		imgResp=urlopen(url)
@@ -93,8 +101,9 @@ while True:
 			# draw the prediction on the frame
 			label = "{}: {:.2f}%".format(CLASSES[idx],
 				confidence * 100)
-			engine.say(str(label))
-			engine.runAndWait()
+			if s:
+				engine.say(str(label))
+				engine.runAndWait()
 			detected_objects.append(label)
 			cv2.rectangle(frame, (startX, startY), (endX, endY),
 				COLORS[idx], 2)
