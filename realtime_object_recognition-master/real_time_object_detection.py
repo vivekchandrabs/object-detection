@@ -10,6 +10,10 @@ import imutils
 import time
 import cv2
 from urllib.request import urlopen
+import pyttsx3;
+engine = pyttsx3.init();
+# engine.say("I will speak this text");
+# engine.runAndWait() ;
 
 
 url="https://www.youtube.com/watch?v=ZbZSe6N_BXs"
@@ -52,7 +56,7 @@ while True:
 	# to have a maximum width of 400 pixels
 	if args["source"] == "webcam":
 		ret, frame = vs.read()
-		print(ret)
+		#print(ret)
 	else:
 		imgResp=urlopen(url)
 		imgNp=np.array(bytearray(imgResp.read()),dtype=np.uint8)
@@ -89,6 +93,8 @@ while True:
 			# draw the prediction on the frame
 			label = "{}: {:.2f}%".format(CLASSES[idx],
 				confidence * 100)
+			engine.say(str(label))
+			engine.runAndWait()
 			detected_objects.append(label)
 			cv2.rectangle(frame, (startX, startY), (endX, endY),
 				COLORS[idx], 2)
