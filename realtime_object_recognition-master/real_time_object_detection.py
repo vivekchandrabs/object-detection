@@ -61,7 +61,7 @@ while True:
 		s = False
 		print(ret)
 		a.append(str(ret))
-		if len(a) == 50:
+		if len(a) == 75:
 			a = []
 			s = True
 		#print(ret)
@@ -102,8 +102,10 @@ while True:
 			label = "{}: {:.2f}%".format(CLASSES[idx],
 				confidence * 100)
 			if s:
-				engine.say(str(label))
-				engine.runAndWait()
+                                label = label.split(":")
+                                label = label[0]
+                                engine.say(str(label)+ " ahead")
+                                engine.runAndWait()                               
 			detected_objects.append(label)
 			cv2.rectangle(frame, (startX, startY), (endX, endY),
 				COLORS[idx], 2)
